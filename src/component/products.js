@@ -14,6 +14,8 @@ const [price, setPrice] = useState(0);
 const [stock, setStock] = useState(0);
 const [def, setDef] = useState(0);
 const [tables, setTables] = useState([]);
+const [products, setProducts] = useState([]);
+
 const {state}=useLocation();
 const navigate = useNavigate();
 
@@ -22,6 +24,12 @@ const getTables = async() => {
          const category = response.data.map(res => res)
          setTables(category);
      });
+ };
+ const getProducts = async() => 
+ {
+     axios.get(variables.ApiUrl+'products/GetProduct').then((response) => {
+     const category = response.data.map(res => res)
+     setProducts(category);});
  };
 const postTables=async(j) => {
     axios.post(variables.ApiUrl+'products/PostProduct',j)
@@ -33,16 +41,27 @@ const putTables=async(j) => {
     .then((respons)=>{console.log('success!!!')})
     .catch((err)=>{console.log(err)})
 }
+const checkValue=async()=>{
+    if(Number(state)>=0 && state!=null&&products.length!=0){
+        const i=Number(state);
+        setName(products[i].name);
+        setPrice(products[i].price);
+        setStock(products[i].amount);
+        setDef(products[i].departmentId)
+    }
+}
  React.useEffect(() => {
      getTables();
+     getProducts();
+     checkValue();
  });
      return (       
      <div><h4>-pruduct-</h4> <br/>
-        <input   type="text" onChange={(e) => {setName(e.target.value);}}></input>
+        <input   type="text" value={name} onChange={(e) => {setName(e.target.value);}}></input>
         <p>product price:</p>
-        <input  type="number" onChange={(e) => {setPrice(e.target.value);}}></input>
+        <input  type="number" value={price} onChange={(e) => {setPrice(e.target.value);}}></input>
         <p>amount in stock:</p>
-        <input  type="number" onChange={(e) => {setStock(e.target.value);}}></input>
+        <input  type="number" value={stock} onChange={(e) => {setStock(e.target.value);}}></input>
         <br/><br/>
         <p>select department:</p>
 
@@ -50,13 +69,14 @@ const putTables=async(j) => {
           {
           tables.map((o,i)=>{ if(def==0)setDef(tables[0].id);
            return(<option key={i} value={o.name}>{o.name} </option>)})  
+           
           }        
         </select>
         
         <br/><br/><button className="btn btn-primary" onClick={()=>{
          if(Number(state)>=0 && state!=null)
          {
-          const j={"id":Number(state),"name": name,"price":Number(price),"amount":Number(stock),"departmentId":def};
+          const j={"id":products[Number(state)].id,"name": name,"price":Number(price),"amount":Number(stock),"departmentId":def};
           putTables(j);
          navigate("/Grids");
          }

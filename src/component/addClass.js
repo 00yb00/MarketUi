@@ -30,19 +30,29 @@ function AddClass()
       axios.post(variables.ApiUrl+'departments/PostDepartment',j)
      .then((respons)=>{console.log('success!!!')})
      .catch((err)=>{console.log(err)})};
+     
+     const checkValue=async()=>{
+      if(Number(state)>=0 && state!=null&&categList.length!=0){
+          const i=Number(state);
+          setName(categList[i].name);
+          setDesc(categList[i].descrption);
+
+      }
+  }
    
     useEffect(() => {
       getItems();
-
+      checkValue();
     });
+
     return (
     <div>
       <h4>-department-</h4> <br/>
       <h1>{state}</h1>
         <p>department name:</p>
-        <input type="text" onChange={(e) => {setName(e.target.value); }}></input>
+        <input type="text" value={name} onChange={(e) => {setName(e.target.value); }}></input>
         <p>department description:</p>
-        <input type="text" onChange={(e) => {setDesc(e.target.value); }}></input><br/>
+        <input type="text" value={desc} onChange={(e) => {setDesc(e.target.value); }}></input><br/>
         <br/>
         <button className="btn btn-primary" onClick={()=>{  
           if(categList.includes(name.trim())) 

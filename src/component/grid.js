@@ -76,7 +76,7 @@ function Grids() {
       return( 
       <tr key={i} style={{ listStyleType:'none'}}>
       <th>{o.id}</th><th>{o.name}</th><th>{o.descrption}</th>
-      <th><button className="btn btn-primary" onClick={()=>{deleteProduct(tables[i].id)}}>delete</button></th>
+      <th><button className="btn btn-primary" onClick={()=>{deleteProduct(i)}}>delete</button></th>
       <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick1(i);}}>edit</button></th>
         </tr>
       )})
@@ -99,7 +99,7 @@ function Grids() {
       <tr key={i} style={{ listStyleType:'none'}} > 
       <th >{o.id}</th><th>{o.name}</th><th >{o.price}</th><th >{o.amount}</th><th >{o.departmentName}</th>
       <th><button className="btn btn-primary" onClick={()=>{deleteDep(products[i].id)}}>delete</button></th>
-      <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick2(products[i].id);}}>edit</button></th> 
+      <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick2(i);}}>edit</button></th> 
        </tr>)})
     }       
 </tbody>
