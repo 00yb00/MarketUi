@@ -4,6 +4,7 @@ import axios from 'axios';
 import { variables } from './variables';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Products() 
 { 
@@ -11,7 +12,7 @@ const [name, setName] = useState("");
 const [id, setId] = useState(12);
 const [price, setPrice] = useState(0);
 const [stock, setStock] = useState(0);
-const [def, setDef] = useState("");
+const [def, setDef] = useState(0);
 const [tables, setTables] = useState([]);
 const {state}=useLocation();
 const navigate = useNavigate();
@@ -35,8 +36,8 @@ const putTables=async(j) => {
  React.useEffect(() => {
      getTables();
  });
-     return (
-     <div>
+     return (       
+     <div><h4>-pruduct-</h4> <br/>
         <input   type="text" onChange={(e) => {setName(e.target.value);}}></input>
         <p>product price:</p>
         <input  type="number" onChange={(e) => {setPrice(e.target.value);}}></input>
@@ -45,23 +46,23 @@ const putTables=async(j) => {
         <br/><br/>
         <p>select department:</p>
 
-        <select value={def} onChange={(e) => {setDef(e.target.value);}}> 
+        <select onChange={(e) => {setDef(e.target.value);}}> 
           {
-          tables.map((o,i)=>{ if(def=="")setDef(tables[0].name);
+          tables.map((o,i)=>{ if(def==0)setDef(tables[0].id);
            return(<option key={i} value={o.name}>{o.name} </option>)})  
           }        
         </select>
         
-        <br/><br/><button onClick={()=>{
+        <br/><br/><button className="btn btn-primary" onClick={()=>{
          if(Number(state)>=0 && state!=null)
          {
-          const j={"id":Number(state),"name": name,"price":Number(price),"amount":Number(stock),"departmentName":def};
+          const j={"id":Number(state),"name": name,"price":Number(price),"amount":Number(stock),"departmentId":def};
           putTables(j);
          navigate("/Grids");
          }
         else
         { 
-        const j={"id": id,"name": name,"price":Number(price),"amount":Number(stock),"departmentName":def}
+        const j={"id": id,"name": name,"price":Number(price),"amount":Number(stock),"departmentId":def}
         postTables(j);
         }}}>add product to db</button>
         

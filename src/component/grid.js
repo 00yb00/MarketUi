@@ -5,11 +5,14 @@ import {useState}from 'react';
 import axios from 'axios';
 import { variables } from './variables';
 import { useNavigate } from 'react-router-dom';
+import Table from 'react-bootstrap/Table';
 
 function Grids() {  
 
     const [tables, setTables] = useState([]);
     const [products, setProducts] = useState([]);
+    const [productsView, setProductsView] = useState([]);
+
     const navigate = useNavigate();
 
    const handleClick1 = async(i) => 
@@ -32,6 +35,12 @@ function Grids() {
         const category = response.data.map(res => res)
         setProducts(category);});
     };
+    const getProductsView = async() => 
+    {
+        axios.get(variables.ApiUrl+'products/GetProductVeiw').then((response) => {
+        const category = response.data.map(res => res)
+        setProductsView(category);});
+    };
     const deleteProduct= async(i) => 
     {
       axios.delete(variables.ApiUrl+'departments/DeleteDepartment/'+(i))
@@ -48,34 +57,53 @@ function Grids() {
     {
             getTables();
             getProducts();
+            getProductsView();
     });
 
  return (
- <div><Box>
-  
-<p>class:</p>
-    <ul style={{ listStyleType:'none'}}>
+ <div style={{height:'50%',width:'50%',marginLeft:'25%'}}>
+  <h3>-all tables-</h3><br/>
+   <Table striped  >
+        <thead>
+        <tr >
+          <th>id</th>
+          <th>name</th>
+          <th>descrption</th>
+        </tr>
+      </thead>
+  <tbody>  
     { tables.map((o,i)=>{
-      return(
-      <li key={i}>{o.name}
-      <button onClick={()=>{deleteProduct(tables[i].id)}}>delete</button>
-      <button type="submit" onClick={() => { handleClick1(i);}}>edit</button>
-    </li>
+      return( 
+      <tr key={i} style={{ listStyleType:'none'}}>
+      <th>{o.id}</th><th>{o.name}</th><th>{o.descrption}</th>
+      <th><button className="btn btn-primary" onClick={()=>{deleteProduct(tables[i].id)}}>delete</button></th>
+      <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick1(i);}}>edit</button></th>
+        </tr>
       )})
     }
-    </ul>
-
-<p>products:</p>
-    <ul style={{ listStyleType:'none'}}>
-    { products.map((o,i)=>{
+    </tbody>
+</Table>
+<Table striped>
+<thead>
+        <tr >
+          <th>id</th>
+          <th>name</th>
+          <th>price</th>
+          <th>amount</th>
+          <th>category</th>
+        </tr>
+      </thead>
+<tbody>  
+    { productsView.map((o,i)=>{
       return(
-      <li key={i}>{o.name} 
-      <button onClick={()=>{deleteDep(products[i].id)}}>delete</button>
-      <button type="submit" onClick={() => { handleClick2(products[i].id);}}>edit</button></li>
-      )})
-    }     
-    </ul>
-
-</Box> </div>);  
+      <tr key={i} style={{ listStyleType:'none'}} > 
+      <th >{o.id}</th><th>{o.name}</th><th >{o.price}</th><th >{o.amount}</th><th >{o.departmentName}</th>
+      <th><button className="btn btn-primary" onClick={()=>{deleteDep(products[i].id)}}>delete</button></th>
+      <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick2(products[i].id);}}>edit</button></th> 
+       </tr>)})
+    }       
+</tbody>
+</Table>
+ </div>);  
 }
 export default Grids;

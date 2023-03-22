@@ -4,6 +4,7 @@ import {useState} from 'react';
 import { variables } from './variables';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AddClass() 
 {
@@ -36,15 +37,14 @@ function AddClass()
     });
     return (
     <div>
-      <h4>-add department-</h4>
+      <h4>-department-</h4> <br/>
       <h1>{state}</h1>
         <p>department name:</p>
         <input type="text" onChange={(e) => {setName(e.target.value); }}></input>
         <p>department description:</p>
         <input type="text" onChange={(e) => {setDesc(e.target.value); }}></input><br/>
         <br/>
-
-        <button onClick={()=>{  
+        <button className="btn btn-primary" onClick={()=>{  
           if(categList.includes(name.trim())) 
           {
             console.log ('faild the value is alredy exists !!!')

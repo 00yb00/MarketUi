@@ -8,11 +8,9 @@ import React from "react";
 import {useState}from 'react';
 import { BrowserRouter, Route,Routes } from "react-router-dom";
 
-
 function App() {
   return (
     <div className="App">
-      <h1>xnes project </h1>   
   <BrowserRouter>
           <Routes>
           <Route exact path="/" element={<Home/>}/>
