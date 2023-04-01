@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function Products() 
+function ProductMain() 
 { 
 const [name, setName] = useState("");
 const [id, setId] = useState(12);
@@ -29,7 +29,9 @@ const getTables = async() => {
  {
      axios.get(variables.ApiUrl+'products/GetProduct').then((response) => {
      const category = response.data.map(res => res)
-     setProducts(category);});
+     setProducts(category);
+     checkValue(category);
+    });
  };
 const postTables=async(j) => {
     axios.post(variables.ApiUrl+'products/PostProduct',j)
@@ -41,20 +43,21 @@ const putTables=async(j) => {
     .then((respons)=>{console.log('success!!!')})
     .catch((err)=>{console.log(err)})
 }
-const checkValue=async()=>{
-    if(Number(state)>=0 && state!=null&&products.length!=0){
+const checkValue=async(category)=>{
+    if(Number(state)>=0 && state!=null&&category.length!=0){
         const i=Number(state);
-        setName(products[i].name);
-        setPrice(products[i].price);
-        setStock(products[i].amount);
-        setDef(products[i].departmentId)
+        setName(category[i].name);
+        setPrice(category[i].price);
+        setStock(category[i].amount);
+        setDef(category[i].departmentId);
     }
 }
- React.useEffect(() => {
-     getTables();
-     getProducts();
-     checkValue();
- });
+React.useEffect(() => {
+    //It will only run once
+    getProducts();
+    getTables();
+  }, []);
+
      return (       
      <div><h4>-pruduct-</h4> <br/>
         <input   type="text" value={name} onChange={(e) => {setName(e.target.value);}}></input>
@@ -68,7 +71,7 @@ const checkValue=async()=>{
         <select onChange={(e) => {setDef(e.target.value);}}> 
           {
           tables.map((o,i)=>{ if(def==0)setDef(tables[0].id);
-           return(<option key={i} value={o.name}>{o.name} </option>)})  
+           return(<option key={i} value={tables[i].id}>{o.name} </option>)})  
            
           }        
         </select>
@@ -88,4 +91,4 @@ const checkValue=async()=>{
         
     </div>);
 }
-export default Products;
+export default ProductMain;

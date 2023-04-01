@@ -5,8 +5,8 @@ function Home() {
 
     return (<div>
         home page<br/>
-        <Link to='/AddClass'>add table</Link><br/>
-        <Link to='/Products'>add products</Link><br/>
+        <Link to='/DepartmentMain'>add table</Link><br/>
+        <Link to='/ProductMain'>add products</Link><br/>
         <Link to='/Grids'>show all</Link>
     </div>);
 }

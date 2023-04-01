@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function AddClass() 
+function DepartmentMain() 
 {
     const [name, setName] = useState("");
     const [desc, setDesc] = useState("");
@@ -19,6 +19,7 @@ function AddClass()
       axios.get(variables.ApiUrl+'departments/GetDepartment').then((response) => {
       const categoryNames = response.data;
       setCategList(categoryNames);
+      checkValue(categoryNames);
       });};
 
     const putDep=async(j)=>{
@@ -31,24 +32,22 @@ function AddClass()
      .then((respons)=>{console.log('success!!!')})
      .catch((err)=>{console.log(err)})};
      
-     const checkValue=async()=>{
-      if(Number(state)>=0 && state!=null&&categList.length!=0){
+     const checkValue=async(categoryNames)=>{
+      if(Number(state)>=0 && state!=null&&categoryNames.length!=0){
           const i=Number(state);
-          setName(categList[i].name);
-          setDesc(categList[i].descrption);
+          setName(categoryNames[i].name);
+          setDesc(categoryNames[i].descrption);
 
       }
   }
    
-    useEffect(() => {
+React.useEffect(() => {
       getItems();
-      checkValue();
-    });
+    }, []);
 
     return (
     <div>
       <h4>-department-</h4> <br/>
-      <h1>{state}</h1>
         <p>department name:</p>
         <input type="text" value={name} onChange={(e) => {setName(e.target.value); }}></input>
         <p>department description:</p>
@@ -74,4 +73,4 @@ function AddClass()
     </div>
     );
 }
-export default AddClass;
+export default DepartmentMain;

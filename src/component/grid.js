@@ -17,11 +17,11 @@ function Grids() {
 
    const handleClick1 = async(i) => 
    {
-        navigate("/AddClass", { state:i.toString() });
+        navigate("/DepartmentMain", { state:i.toString() });
    };
    const handleClick2 = async(i) => 
    {
-        navigate("/Products", { state:i.toString() });
+        navigate("/ProductMain", { state:i.toString() });
    };
    const getTables = async() => 
    {
@@ -43,13 +43,13 @@ function Grids() {
     };
     const deleteProduct= async(i) => 
     {
-      axios.delete(variables.ApiUrl+'departments/DeleteDepartment/'+(i))
+      axios.delete(variables.ApiUrl+'products/DeleteProduct'+(i))
       .then((respons)=>{console.log('success!!!')})
       .catch((err)=>{console.log(err)})
     };
     const deleteDep= async(i)=>
     {
-      axios.delete(variables.ApiUrl+'products/DeleteProduct/'+(i))
+      axios.delete(variables.ApiUrl+'departments/DeleteDepartment/'+(i))
       .then((respons)=>{console.log('success!!!')})
       .catch((err)=>{console.log(err)})
     };
@@ -76,7 +76,7 @@ function Grids() {
       return( 
       <tr key={i} style={{ listStyleType:'none'}}>
       <th>{o.id}</th><th>{o.name}</th><th>{o.descrption}</th>
-      <th><button className="btn btn-primary" onClick={()=>{deleteProduct(i)}}>delete</button></th>
+      <th><button className="btn btn-primary" onClick={()=>{deleteDep(o.id)}}>delete</button></th>
       <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick1(i);}}>edit</button></th>
         </tr>
       )})
@@ -98,7 +98,7 @@ function Grids() {
       return(
       <tr key={i} style={{ listStyleType:'none'}} > 
       <th >{o.id}</th><th>{o.name}</th><th >{o.price}</th><th >{o.amount}</th><th >{o.departmentName}</th>
-      <th><button className="btn btn-primary" onClick={()=>{deleteDep(products[i].id)}}>delete</button></th>
+      <th><button className="btn btn-primary" onClick={()=>{deleteProduct(o.id)}}>delete</button></th>
       <th><button className="btn btn-primary" type="submit" onClick={() => { handleClick2(i);}}>edit</button></th> 
        </tr>)})
     }       

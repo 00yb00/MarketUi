@@ -1,6 +1,6 @@
 import './App.css';
-import AddClass from './component/addClass';
-import Products from './component/products';
+import DepartmentMain from './component/departmentMain';
+import ProductMain from './component/productMain';
 import Grids from './component/grid';
 import Home from'./component/home';
 import axios from "axios";
@@ -14,8 +14,8 @@ function App() {
   <BrowserRouter>
           <Routes>
           <Route exact path="/" element={<Home/>}/>
-             <Route exact path="/AddClass" element={<AddClass/>}/>
-             <Route exact path="/Products" element={<Products/>}/>
+             <Route exact path="/DepartmentMain" element={<DepartmentMain/>}/>
+             <Route exact path="/ProductMain" element={<ProductMain/>}/>
              <Route exact path="/Grids" element={<Grids/>}/>
           </Routes>
        </BrowserRouter>
